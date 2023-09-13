@@ -30,8 +30,6 @@ class loginVC: UIViewController {
              userdefaults.set( true, forKey: "loginScreen")
             
              let vc = self.storyboard?.instantiateViewController(withIdentifier:"movieList") as! ViewController
-         // let appDelgate = UIApplication.shared.delegate as! AppDelegate
-   //     appDelgate.appWindow?.rootViewController = vc
            self.navigationController?.pushViewController(vc, animated: true)
          }
          else{
@@ -54,14 +52,6 @@ class loginVC: UIViewController {
     }
     
     
-    /*
-     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

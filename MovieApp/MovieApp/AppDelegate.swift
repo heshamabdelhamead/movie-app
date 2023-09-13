@@ -25,24 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         }
             
-            // ...
-            
-//            func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-//                guard let windowScene = scene as? UIWindowScene else { return }
-//                let window = UIWindow(windowScene: windowScene)
-//                appWindow = window
-//
-//                let isLoginIn = UserDefaults.standard.bool(forKey: "loginScreen")
-//
-//                if isLoginIn {
-//                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//                    let vc = storyboard.instantiateViewController(withIdentifier: "movieList") as! ViewController
-//                    window.rootViewController = vc
-//                }
-//
-//              //  window.makeKeyAndVisible()
-//            }
-        
+
         
         return true
     }
