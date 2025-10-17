@@ -12,11 +12,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     
     func setRootViewController() {
-        let isLoginIn = UserDefaults.standard.bool(forKey: "loginScreen")
+        let isLoginIn = UserDefaults.standard.bool(forKey: UserDefaultsKeys.isLoggedIn)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         if isLoginIn {
-            let vc = storyboard.instantiateViewController(withIdentifier: "movieList") as! ViewController
+            let SB = UIStoryboard(name: "MoviesList", bundle: nil)
+            let vc = SB.instantiateViewController(withIdentifier: "MoviesListViewController") as! MoviesListViewController
           //  window?.rootViewController = vc
             let navController = UINavigationController(rootViewController: vc)
             window?.rootViewController = navController

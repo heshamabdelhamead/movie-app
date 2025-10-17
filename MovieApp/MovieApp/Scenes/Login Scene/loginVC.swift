@@ -8,7 +8,7 @@
 import UIKit
 
 class loginVC: UIViewController {
-
+    let userDefaults = UserDefaults.standard
     @IBOutlet weak var userPassword: UITextField!
     @IBOutlet weak var userName: UITextField!
     override func viewDidLoad() {
@@ -17,9 +17,7 @@ class loginVC: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    let userdefaults = UserDefaults.standard
-
-    
+   
      @IBAction func buttonLogin(_ sender: Any) {
          let userName = userName.text
          let password = userPassword.text
@@ -27,17 +25,13 @@ class loginVC: UIViewController {
          let shouldGoToNextScreen = verify(userName: userName, password: password)
         
          if shouldGoToNextScreen {
-             userdefaults.set( true, forKey: "loginScreen")
-            
-             let vc = self.storyboard?.instantiateViewController(withIdentifier:"movieList") as! ViewController
+             userDefaults.set( true, forKey:UserDefaultsKeys.isLoggedIn )
+         guard    let vc = self.storyboard?.instantiateViewController(withIdentifier:"movieList") as? MoviesListViewController else {return}
            self.navigationController?.pushViewController(vc, animated: true)
          }
          else{
-             print("user name or password is incrocet")
+             showError()
          }
-         
-         
-         
      }
     
     
@@ -51,7 +45,13 @@ class loginVC: UIViewController {
         }
     }
     
-    
-
-
+    private func showError() {
+        let alert = UIAlertController(title: "Error", message: "user name or password is incorrect", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(ok)
+        DispatchQueue.main.async { [weak self] in
+            self?.present(alert, animated: true)
+        }
+        
+    }
 }
