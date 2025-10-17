@@ -18,7 +18,7 @@ class DetailsVC: UIViewController {
         super.viewDidLoad()
         
         let url = URL(string: moive?.image ?? "")
-        detImage .sd_setImage(with: url)
+        detImage.sd_setImage(with: url)
         
         if let rating = moive?.rating{
             detRating.text = "\(rating)"

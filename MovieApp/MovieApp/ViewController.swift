@@ -33,17 +33,17 @@ class ViewController: UIViewController {
         let session = URLSession(configuration: .default)
         let task = session.dataTask(with: request) { [self]  (data, respond, error) in
             do {
-                var json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! Array< Dictionary<String,Any>>
+                guard let data else {  showError();  return}
+                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! Array< Dictionary<String,Any>>
 
                 for rawMovie in json{
                     
-                    var    objectMovie = movie()
+                    let    objectMovie = movie()
                     objectMovie.title = rawMovie["title"] as? String
-                    objectMovie.image = filmsphoto[i]
+                    objectMovie.image =   filmsphoto[i]
                     objectMovie.rating = rawMovie["rating"] as? Double
                     objectMovie.releaseYear = rawMovie["releaseYear"] as? Int
                     self.movieArray!.append(objectMovie)
-                    
                     i += 1
                 }
                
@@ -57,10 +57,16 @@ class ViewController: UIViewController {
         }
         task.resume()
     }
+    private func showError(){
+        let alert = UIAlertController(title: "Error", message: "Something went wrong", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(ok)
+        DispatchQueue.main.async { [weak self] in
+            self?.present(alert, animated: true)
+        }
+    }
     
 }
-
-
 
 extension ViewController : UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

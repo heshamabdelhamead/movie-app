@@ -11,19 +11,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     
-//    func setRootViewController() {
-//        let isLoginIn = UserDefaults.standard.bool(forKey: "loginScreen")
-//        if isLoginIn {
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//            let vc = storyboard.instantiateViewController(withIdentifier: "movieList") as! ViewController
-//            window?.rootViewController = vc
-//        }
-//        else {
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//                let defaultVC = storyboard.instantiateViewController(withIdentifier: "login") as! loginVC
-//                window?.rootViewController = defaultVC
-//            }
-//    }
     func setRootViewController() {
         let isLoginIn = UserDefaults.standard.bool(forKey: "loginScreen")
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
