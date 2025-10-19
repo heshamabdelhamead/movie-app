@@ -2,7 +2,7 @@
 
 A simple demo iOS app featuring a login screen, a list of movies, and detailed views for each movie.
 
-##Features
+## Features
   •    Login screen (Demo credentials provided below)
   •    Movie list fetched and displayed dynamically
   •    Movie detail screen showing more information
