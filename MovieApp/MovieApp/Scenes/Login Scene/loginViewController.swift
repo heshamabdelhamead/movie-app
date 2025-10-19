@@ -1,5 +1,5 @@
 //
-//  loginVC.swift
+//  loginViewController.swift
 //  MovieApp
 //
 //  Created by hesham abd elhamead on 04/06/2023.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class loginVC: UIViewController {
+class loginViewController: UIViewController {
     let userDefaults = UserDefaults.standard
     @IBOutlet weak var userPassword: UITextField!
     @IBOutlet weak var userName: UITextField!
@@ -26,7 +26,8 @@ class loginVC: UIViewController {
         
          if shouldGoToNextScreen {
              userDefaults.set( true, forKey:UserDefaultsKeys.isLoggedIn )
-         guard    let vc = self.storyboard?.instantiateViewController(withIdentifier:"movieList") as? MoviesListViewController else {return}
+             let SB = UIStoryboard(name: "MoviesList", bundle: nil)
+             let vc = SB.instantiateViewController(withIdentifier: "MoviesListViewController") as! MoviesListViewController
            self.navigationController?.pushViewController(vc, animated: true)
          }
          else{
@@ -34,9 +35,7 @@ class loginVC: UIViewController {
          }
      }
     
-    
     func verify(userName : String?, password : String?)-> Bool{
-        
         if (userName == "hesham" && password == "123456"){
             return true
         }

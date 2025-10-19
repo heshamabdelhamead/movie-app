@@ -17,12 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 
-        let isLoginIn = UserDefaults.standard.bool(forKey: UserDefaultsKeys.isLoggedIn)
-        if isLoginIn{
-            let SB = UIStoryboard(name: "MoviesList", bundle: nil)
-            let vc = SB.instantiateViewController(withIdentifier: "MoviesListViewController") as! MoviesListViewController
-           appWindow?.rootViewController = vc
-        }
         return true
     }
 

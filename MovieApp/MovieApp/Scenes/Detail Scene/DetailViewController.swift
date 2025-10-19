@@ -1,5 +1,5 @@
 //
-//  DetailVC.swift
+//  DetailViewController.swift
 //  MovieApp
 //
 //  Created by hesham abd elhamead on 02/06/2023.
@@ -7,8 +7,8 @@
 
 import UIKit
 
-class DetailVC: UIViewController {
-    static let identifier: String = "DetailVC"
+class DetailViewController: UIViewController {
+    static let identifier: String = "DetailViewController"
     @IBOutlet weak var year: UILabel!
     @IBOutlet weak var detRating: UILabel!
     @IBOutlet weak var deTitle: UILabel!

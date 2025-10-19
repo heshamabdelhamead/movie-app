@@ -9,23 +9,32 @@ import UIKit
 import SDWebImage
 
 class MoviesListViewController: UIViewController {
-
-   private  var i = 0
+    
+    private  var i = 0
     var movieArray : [MovieModel]?{
         didSet{
             DispatchQueue.main.async {
-            self.collectionView.reloadData()
-           }
+                self.collectionView.reloadData()
+            }
         }
     }
     
     @IBOutlet weak var collectionView: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.leftBarButtonItem = nil
-         // Do any additional setup after loading the view.
+        
+        // Do any additional setup after loading the view.
+        setupView()
+    }
+    private  func setupView(){
         movieArray = [MovieModel]()
+        navigationItem.leftBarButtonItem = nil
+        setupMoviesListCollectionView()
         fetchData()
+    }
+    private func  setupMoviesListCollectionView(){
+        let cellNib = UINib(nibName: MovieListCollectionViewCell.identifier, bundle: nil)
+        collectionView.register(cellNib, forCellWithReuseIdentifier: MovieListCollectionViewCell.identifier)
     }
     
     private func fetchData(){
@@ -36,7 +45,7 @@ class MoviesListViewController: UIViewController {
             do {
                 guard let data else {  showError();  return}
                 let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! Array< Dictionary<String,Any>>
-
+                
                 for rawMovie in json{
                     
                     let    objectMovie = MovieModel()
@@ -47,17 +56,16 @@ class MoviesListViewController: UIViewController {
                     self.movieArray!.append(objectMovie)
                     i += 1
                 }
-               
+                
             }
             
             catch{
                 print("error")
             }
-
-            
         }
         task.resume()
     }
+    
     private func showError(){
         let alert = UIAlertController(title: "Error", message: "Something went wrong", preferredStyle: .alert)
         let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
@@ -71,44 +79,32 @@ class MoviesListViewController: UIViewController {
 
 extension MoviesListViewController : UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-       return  (movieArray?.count) ?? 0
+        return  (movieArray?.count) ?? 0
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "movieCell", for: indexPath) as! MovieCell
-        cell.movieTitle.text = movieArray![indexPath.row].title
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieListCollectionViewCell.identifier, for: indexPath) as? MovieListCollectionViewCell else {
+            return UICollectionViewCell()
+        }
         
-        let url = URL(string: movieArray?[indexPath.row].image ?? "")
-
-            cell.movieImage .sd_setImage(with: url)
+        cell.setupCell(with: movieArray?[indexPath.row])
         return cell
-
     }
-     // to make collectionView with to cell  in all modes
+    // to make collectionView with to cell  in all modes
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let numcol:CGFloat = 2
+        
         let collectionViewWidth = collectionView.bounds.width
-        let layout = collectionViewLayout as! UICollectionViewFlowLayout
-        let spaceBetweenCells = layout.minimumInteritemSpacing * (numcol-1)
-        let exactWidth = floor ((collectionViewWidth - spaceBetweenCells)/numcol )
-        return CGSize(width: exactWidth, height: exactWidth)
+        let availableWidth = collectionViewWidth / 2
+        return CGSize(width: availableWidth, height: 200)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyBoard = UIStoryboard(name: "Detail", bundle: nil)
-        guard  let vc = storyBoard.instantiateViewController(withIdentifier: DetailVC.identifier) as? DetailVC else {return}
+        guard  let vc = storyBoard.instantiateViewController(withIdentifier: DetailViewController.identifier) as? DetailViewController else {return}
         vc.movie = movieArray?[indexPath.row]
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    // solve the problem of landScapem mode
-    
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-
-        collectionView.collectionViewLayout.invalidateLayout()
-    }
-    
     
 }
 
