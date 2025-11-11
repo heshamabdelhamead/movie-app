@@ -1,6 +1,5 @@
 # movie-app
-
-   A simple demo iOS app featuring a login screen, a list of movies, and detailed views for each movie.
+A simple demo iOS app featuring a login screen, a list of movies, and detailed views for each movie.
 
 ## Features
     •    Login screen (Demo credentials provided below)
